@@ -8,7 +8,7 @@ token to be passed as Bearer token for nginx to allow to below
 
 - `PROXY_ADDR`
 
-server to proxy to
+server to proxy to. Can be DNS or IP
 
 - `PROXY_PORT`
 
