@@ -1,5 +1,7 @@
 # nginx-auth-proxy
 
+Add some basic authentication to any webapp by proxying it through this nginx container.
+
 ## env vars needed
 
 - `AUTH_TOKEN`
