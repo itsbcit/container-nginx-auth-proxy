@@ -1,4 +1,4 @@
-FROM bcit/openshift-nginx:<%= image.vars['nginx_ver'] %>
+FROM bcit/openshift-nginx:1.18
 
 USER root
 
