@@ -1,9 +1,9 @@
 server {
     listen              {{ default .Env.NGINX_SCHEME "8080" }};
     server_name         localhost;
-    {{ if exists "/tmp/load-nginx-cert" }} 
-    ssl_certificate     /etc/ssl/certs/nginx-selfsigned.crt;
-    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+    {{ if exists "/certs/nginx-selfsigned.crt" }} 
+    ssl_certificate     /certs/nginx-selfsigned.crt;
+    ssl_certificate_key /certs/nginx-selfsigned.key;
     {{ end }}
 
     location / {
