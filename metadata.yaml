@@ -2,8 +2,6 @@
 image_name: nginx-auth-proxy
 registries:
   - url: bcit.io
-  - url: docker.io
-    org_name: bcit
 labels:
   maintainer: "jesse@weisner.ca, chriswood.ca@gmail.com"
 versions:
@@ -14,4 +12,5 @@ versions:
       nginx_ver: '1.18'
 files:
   - 'default.conf.tmpl'
+  - '40-gen-selfsigned-cert.sh'
   - '50-dockerize-config.sh'

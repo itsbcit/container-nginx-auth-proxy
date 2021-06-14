@@ -1,6 +1,10 @@
 server {
-    listen       8080;
-    server_name  localhost;
+    listen              {{ default .Env.NGINX_SCHEME "8080" }};
+    server_name         localhost;
+    {{ if exists "/tmp/load-nginx-cert" }} 
+    ssl_certificate     /etc/ssl/certs/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+    {{ end }}
 
     location / {
         proxy_http_version 1.1;

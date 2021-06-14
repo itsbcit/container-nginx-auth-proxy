@@ -1,12 +1,22 @@
+FROM bcit/alpine:3.13 as certbuild
+
+RUN apk add --no-cache openssl
+WORKDIR /src
+RUN openssl req -x509 -nodes -days 3650 -subj "/C=CA/ST=BC/O=BCIT/CN=bcit.ca" -newkey rsa:2048 -keyout /src/nginx-selfsigned.key -out /src/nginx-selfsigned.crt
+
 FROM bcit/openshift-nginx:1.18
 
 USER root
 
-COPY default.conf.tmpl /etc/nginx/conf.d/default.conf.tmpl
-COPY 50-dockerize-config.sh /docker-entrypoint.d/50-dockerize-config.sh
+COPY default.conf.tmpl          /etc/nginx/conf.d/default.conf.tmpl
+COPY --from=certbuild /src/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key
+COPY --from=certbuild /src/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
+COPY 40-gen-selfsigned-cert.sh  /docker-entrypoint.d/40-gen-selfsigned-cert.sh
+COPY 50-dockerize-config.sh     /docker-entrypoint.d/50-dockerize-config.sh
 
 RUN chown nginx /etc/nginx/conf.d/default.conf \
- && chmod 776 /etc/nginx/conf.d/default.conf
+ && chmod 776 /etc/nginx/conf.d/default.conf \
+ && chmod a+r /etc/ssl/private/nginx-selfsigned.key
 
 USER nginx
 ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
