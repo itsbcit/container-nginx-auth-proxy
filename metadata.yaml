@@ -5,11 +5,11 @@ registries:
 labels:
   maintainer: "jesse@weisner.ca, chriswood.ca@gmail.com"
 versions:
-  '1.18':
+  '1.26.2':
     version_tags: 
-      - '1.18'
+      - '1.26.2'
     vars:
-      nginx_ver: '1.18'
+      nginx_ver: '1.26.2'
 files:
   - 'default.conf.tmpl'
   - '40-gen-selfsigned-cert.sh'
